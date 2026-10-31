@@ -1,0 +1,43 @@
+ matric_number | first_name | last_name | programme_code |          programme_name          |           department_name
+---------------+------------+-----------+----------------+----------------------------------+-------------------------------------
+ MUN/2026/0001 | Amara      | Eze       | MIT            | Master of Information Technology | School of Computing and Informatics
+ MUN/2026/0002 | Chidi      | Adebayo   | MIT            | Master of Information Technology | School of Computing and Informatics
+ MUN/2026/0003 | Zainab     | Yusuf     | BSC-CS         | BSc Computer Science             | School of Computing and Informatics
+(3 rows)
+
+ course_code |       course_title        | matric_number | first_name | last_name | registration_date
+-------------+---------------------------+---------------+------------+-----------+-------------------
+ MIT8101     | Advanced Database Systems | MUN/2026/0001 | Amara      | Eze       | 2026-09-15
+ MIT8101     | Advanced Database Systems | MUN/2026/0002 | Chidi      | Adebayo   | 2026-09-15
+(2 rows)
+
+ matric_number | course_code |       course_title        | mark  | grade
+---------------+-------------+---------------------------+-------+-------
+ MUN/2026/0001 | MIT8101     | Advanced Database Systems | 86.50 | A
+ MUN/2026/0001 | MIT8102     | Research Methods in IT    |       |
+ MUN/2026/0002 | MIT8101     | Advanced Database Systems | 72.00 | B
+ MUN/2026/0003 | MIT8102     | Research Methods in IT    |       |
+(4 rows)
+
+ course_code |       course_title        | registrations | results_recorded | average_mark
+-------------+---------------------------+---------------+------------------+--------------
+ MIT8101     | Advanced Database Systems |             2 |                2 |        79.25
+ MIT8102     | Research Methods in IT    |             2 |                0 |
+(2 rows)
+
+ course_code | matric_number | mark  | grade | course_rank
+-------------+---------------+-------+-------+-------------
+ MIT8101     | MUN/2026/0001 | 86.50 | A     |           1
+ MIT8101     | MUN/2026/0002 | 72.00 | B     |           2
+(2 rows)
+
+ count
+-------
+     0
+(1 row)
+
+ matric_number | first_name | last_name | course_code |      course_title      | registration_date
+---------------+------------+-----------+-------------+------------------------+-------------------
+ MUN/2026/0001 | Amara      | Eze       | MIT8102     | Research Methods in IT | 2026-09-15
+ MUN/2026/0003 | Zainab     | Yusuf     | MIT8102     | Research Methods in IT | 2026-09-15
+(2 rows)

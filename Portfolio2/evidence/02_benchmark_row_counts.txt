@@ -1,0 +1,6 @@
+ table_name | records
+------------+---------
+ students   |   20003
+ enrolments |   40004
+ results    |   40002
+(3 rows)

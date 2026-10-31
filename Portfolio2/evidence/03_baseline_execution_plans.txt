@@ -1,0 +1,75 @@
+ANALYZE
+                                                        QUERY PLAN
+---------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=766.06..766.07 rows=1 width=8) (actual time=2.668..2.668 rows=1.00 loops=1)
+   Output: count(*)
+   Buffers: shared hit=255
+   ->  Seq Scan on mun_srrms.result  (cost=0.00..755.03 rows=4415 width=0) (actual time=0.013..2.506 rows=4358.00 loops=1)
+         Output: result_id, enrolment_id, mark, grade, recorded_at
+         Filter: (result.mark >= '90'::numeric)
+         Rows Removed by Filter: 35644
+         Buffers: shared hit=255
+ Planning:
+   Buffers: shared hit=13
+ Planning Time: 0.320 ms
+ Execution Time: 2.715 ms
+(12 rows)
+
+                                                                      QUERY PLAN
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=1695.21..1695.21 rows=2 width=16) (actual time=9.024..9.027 rows=2.00 loops=1)
+   Output: c.course_code, (count(*))
+   Sort Key: c.course_code
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=552
+   ->  HashAggregate  (cost=1695.18..1695.20 rows=2 width=16) (actual time=8.999..9.003 rows=2.00 loops=1)
+         Output: c.course_code, count(*)
+         Group Key: c.course_code
+         Batches: 1  Memory Usage: 32kB
+         Buffers: shared hit=552
+         ->  Hash Join  (cost=812.33..1673.10 rows=4415 width=8) (actual time=3.030..8.530 rows=4358.00 loops=1)
+               Output: c.course_code
+               Hash Cond: (e.offering_id = co.offering_id)
+               Buffers: shared hit=552
+               ->  Hash Join  (cost=810.21..1610.27 rows=4415 width=4) (actual time=2.992..8.009 rows=4358.00 loops=1)
+                     Output: e.offering_id
+                     Inner Unique: true
+                     Hash Cond: (e.enrolment_id = r.enrolment_id)
+                     Buffers: shared hit=550
+                     ->  Seq Scan on mun_srrms.enrolment e  (cost=0.00..695.04 rows=40004 width=8) (actual time=0.008..1.813 rows=40004.00 loops=1)
+                           Output: e.enrolment_id, e.student_id, e.offering_id, e.registration_date, e.status
+                           Buffers: shared hit=295
+                     ->  Hash  (cost=755.03..755.03 rows=4415 width=4) (actual time=2.943..2.943 rows=4358.00 loops=1)
+                           Output: r.enrolment_id
+                           Buckets: 8192  Batches: 1  Memory Usage: 218kB
+                           Buffers: shared hit=255
+                           ->  Seq Scan on mun_srrms.result r  (cost=0.00..755.03 rows=4415 width=4) (actual time=0.008..2.540 rows=4358.00 loops=1)
+                                 Output: r.enrolment_id
+                                 Filter: (r.mark >= '90'::numeric)
+                                 Rows Removed by Filter: 35644
+                                 Buffers: shared hit=255
+               ->  Hash  (cost=2.09..2.09 rows=2 width=12) (actual time=0.028..0.029 rows=2.00 loops=1)
+                     Output: co.offering_id, c.course_code
+                     Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                     Buffers: shared hit=2
+                     ->  Nested Loop  (cost=0.00..2.09 rows=2 width=12) (actual time=0.024..0.026 rows=2.00 loops=1)
+                           Output: co.offering_id, c.course_code
+                           Inner Unique: true
+                           Join Filter: (co.course_id = c.course_id)
+                           Rows Removed by Join Filter: 1
+                           Buffers: shared hit=2
+                           ->  Seq Scan on mun_srrms.course_offering co  (cost=0.00..1.02 rows=2 width=8) (actual time=0.011..0.011 rows=2.00 loops=1)
+                                 Output: co.offering_id, co.course_id, co.semester_id, co.lecturer_id, co.section_code, co.capacity
+                                 Buffers: shared hit=1
+                           ->  Materialize  (cost=0.00..1.03 rows=2 width=12) (actual time=0.006..0.006 rows=1.50 loops=2)
+                                 Output: c.course_code, c.course_id
+                                 Storage: Memory  Maximum Storage: 17kB
+                                 Buffers: shared hit=1
+                                 ->  Seq Scan on mun_srrms.course c  (cost=0.00..1.02 rows=2 width=12) (actual time=0.007..0.007 rows=2.00 loops=1)
+                                       Output: c.course_code, c.course_id
+                                       Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=313
+ Planning Time: 2.859 ms
+ Execution Time: 9.194 ms
+(55 rows)
