@@ -1,0 +1,28 @@
+﻿# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+!.env.template
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Database backups and logs
+*.dump
+*.backup
+*.bak
+*.log
+
+# Generated dependencies and caches
+node_modules/
+__pycache__/
+*.pyc
+
+# Local editor settings
+.vscode/
