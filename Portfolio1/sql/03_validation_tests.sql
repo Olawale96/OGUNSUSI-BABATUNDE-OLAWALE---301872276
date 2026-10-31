@@ -62,22 +62,40 @@ END $$;
 ROLLBACK;
 
 -- Negative test B: mark outside 0-100 must be rejected.
+-- Select an enrolment that does not already have a result.
 BEGIN;
 DO $$
 DECLARE
     v_enrolment_id INTEGER;
 BEGIN
-    SELECT e.enrolment_id INTO v_enrolment_id
+    SELECT e.enrolment_id
+    INTO v_enrolment_id
     FROM mun_srrms.enrolment e
-    JOIN mun_srrms.student s ON s.student_id = e.student_id
+    JOIN mun_srrms.student s
+        ON s.student_id = e.student_id
     WHERE s.matric_number = 'MUN/2026/0001'
+      AND NOT EXISTS (
+          SELECT 1
+          FROM mun_srrms.result r
+          WHERE r.enrolment_id = e.enrolment_id
+      )
     ORDER BY e.enrolment_id
     LIMIT 1;
 
+    IF v_enrolment_id IS NULL THEN
+        RAISE EXCEPTION
+            'TEST SETUP FAILED: enrolment without an existing result not found';
+    END IF;
+
     BEGIN
-        INSERT INTO mun_srrms.result (enrolment_id, mark, grade)
-        VALUES (v_enrolment_id, 120, 'A');
-        RAISE EXCEPTION 'TEST FAILED: invalid mark was accepted';
+        INSERT INTO mun_srrms.result
+            (enrolment_id, mark, grade)
+        VALUES
+            (v_enrolment_id, 120, 'A');
+
+        RAISE EXCEPTION
+            'TEST FAILED: invalid mark was accepted';
+
     EXCEPTION WHEN check_violation THEN
         RAISE NOTICE 'PASS: mark above 100 rejected';
     END;
