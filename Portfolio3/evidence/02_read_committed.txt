@@ -1,0 +1,53 @@
+﻿PORTFOLIO 3 - READ COMMITTED EXPERIMENT
+
+DBMS: PostgreSQL 18.6
+Database: mun_srrms
+Isolation level: READ COMMITTED
+Test table: transaction_demo_counter
+
+SESSION A - FIRST READ
+
+BEGIN;
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+SELECT counter_value
+FROM mun_srrms.transaction_demo_counter
+WHERE counter_id = 1;
+
+Actual result: 100
+
+SESSION B - CONCURRENT UPDATE
+
+BEGIN;
+
+UPDATE mun_srrms.transaction_demo_counter
+SET counter_value = counter_value + 10
+WHERE counter_id = 1;
+
+Actual output:
+UPDATE 1
+COMMIT
+
+SESSION A - SECOND READ
+
+SELECT counter_value
+FROM mun_srrms.transaction_demo_counter
+WHERE counter_id = 1;
+
+Actual result: 110
+
+COMMIT;
+
+INTERPRETATION
+
+Session A observed 100 on its first SELECT and 110 on
+its second SELECT.
+
+PostgreSQL READ COMMITTED obtains a new snapshot for
+each statement. Therefore, Session A could observe
+Session B's committed update in its subsequent SELECT.
+
+RESULT: Experiment successfully demonstrated.
+
+Source: Actual PostgreSQL terminal outputs recorded
+during the two-session concurrency experiment.

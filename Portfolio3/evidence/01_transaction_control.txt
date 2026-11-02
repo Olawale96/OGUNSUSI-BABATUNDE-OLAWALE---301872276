@@ -1,0 +1,88 @@
+﻿PORTFOLIO 3 - TRANSACTION CONTROL EVIDENCE
+
+DBMS: PostgreSQL 18.6
+Database: mun_srrms
+Table: mun_srrms.transaction_demo_log
+
+NOTE:
+This is a structured transcription of the actual PostgreSQL
+terminal output observed during the practical experiment.
+
+TEST 1: COMMIT
+
+Commands:
+BEGIN;
+INSERT INTO transaction_demo_log(event_description)
+VALUES ('Portfolio 3: committed transaction');
+COMMIT;
+
+Observed output:
+BEGIN
+INSERT 0 1
+COMMIT
+
+Verification:
+demo_id: 1
+event_description: Portfolio 3: committed transaction
+
+Result: PASS
+The committed record remained visible.
+
+TEST 2: ROLLBACK
+
+Commands:
+BEGIN;
+INSERT INTO transaction_demo_log(event_description)
+VALUES ('Portfolio 3: this row must be rolled back');
+ROLLBACK;
+
+Observed output:
+BEGIN
+INSERT 0 1
+ROLLBACK
+
+Verification:
+SELECT returned zero rows for the rolled-back event.
+
+Result: PASS
+The uncommitted record was not retained.
+
+TEST 3: SAVEPOINT
+
+Operations performed:
+1. Insert record before savepoint.
+2. Create SAVEPOINT before_optional_action.
+3. Insert optional record.
+4. ROLLBACK TO SAVEPOINT.
+5. Insert record after savepoint.
+6. COMMIT.
+
+Observed output:
+BEGIN
+INSERT 0 1
+SAVEPOINT
+INSERT 0 1
+ROLLBACK
+INSERT 0 1
+COMMIT
+
+Final retained records:
+demo_id 1: committed transaction
+demo_id 3: retained before savepoint
+demo_id 5: retained after savepoint
+
+The optional action was absent.
+
+Result: PASS
+
+ADDITIONAL OBSERVATION
+
+Identity values contained gaps after rollback.
+PostgreSQL identity sequences are not transactional and
+are not rolled back with ordinary transaction rollback.
+
+OVERALL RESULT:
+All three transaction-control demonstrations succeeded.
+
+Source: Actual PostgreSQL terminal results recorded during
+the Portfolio 3 practical exercise.

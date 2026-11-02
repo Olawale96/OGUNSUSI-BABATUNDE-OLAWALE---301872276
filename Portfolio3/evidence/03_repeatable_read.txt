@@ -1,0 +1,39 @@
+﻿PORTFOLIO 3 - REPEATABLE READ EXPERIMENT
+
+DBMS: PostgreSQL 18.6
+Database: mun_srrms
+Isolation level: REPEATABLE READ
+Test table: transaction_demo_counter
+
+INITIAL COUNTER VALUE: 100
+
+SESSION A - FIRST READ
+Actual result: 100
+
+SESSION B - CONCURRENT UPDATE
+Operation: Increment counter by 10.
+Actual result: UPDATE 1
+Transaction committed successfully.
+
+SESSION A - SECOND READ
+Actual result: 100
+
+SESSION A - COMMIT
+Actual result: COMMIT
+
+FRESH DATABASE READ AFTER SESSION A COMMITTED
+Actual result: 110
+
+INTERPRETATION
+
+Session A retained its original transaction snapshot
+and continued seeing 100 despite Session B's update.
+
+After Session A committed, a fresh read returned 110.
+
+This demonstrates PostgreSQL REPEATABLE READ snapshot behaviour.
+
+RESULT: Experiment successfully demonstrated.
+
+Source: Actual PostgreSQL terminal observations recorded
+during the isolation experiment.

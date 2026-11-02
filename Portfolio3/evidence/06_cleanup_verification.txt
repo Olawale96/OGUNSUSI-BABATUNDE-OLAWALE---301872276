@@ -1,0 +1,35 @@
+﻿PORTFOLIO 3 - DEMONSTRATION DATA CLEANUP
+
+DBMS: PostgreSQL 18.6
+Database: mun_srrms_perf
+
+Demonstration registration:
+Student ID: 2
+Offering ID: 2
+Course: MIT8102
+
+Cleanup operation:
+DELETE FROM mun_srrms.enrolment
+WHERE student_id = 2
+AND offering_id = 2;
+
+Actual PostgreSQL output:
+DELETE 1
+
+Post-cleanup verification:
+
+SELECT COUNT(*) FROM mun_srrms.enrolment;
+
+Actual result:
+40004
+
+RESULT: PASS
+
+The demonstration registration was removed.
+The performance database returned to its original
+40,004 enrolment records.
+
+The original mun_srrms academic database was not
+modified by this cleanup operation.
+
+Source: Actual PostgreSQL cleanup and verification output.
