@@ -1,0 +1,44 @@
+﻿PORTFOLIO 5 - DOCKER ENVIRONMENT AND DATABASE INITIALISATION
+
+Test date: 3 November 2026
+Docker Engine: 29.9.2
+Docker Compose: 5.6.1
+PostgreSQL image: postgres:16
+Actual container PostgreSQL: 16.15
+
+PUBLISHER:
+Container: mun-srrms-publisher
+Host port: 55432
+Status: healthy
+
+SUBSCRIBER:
+Container: mun-srrms-subscriber
+Host port: 55433
+Status: healthy
+
+PUBLISHER INITIALISATION:
+CREATE SCHEMA
+CREATE TABLE
+CREATE ROLE
+GRANT
+GRANT
+GRANT
+CREATE PUBLICATION
+
+SUBSCRIBER INITIALISATION:
+CREATE SCHEMA
+CREATE TABLE
+
+CONFIGURATION VERIFICATION:
+wal_level: logical
+Publication: mun_srrms_events_pub
+Replication role: repl_user
+Replication permission: enabled
+Matching subscriber table: present
+
+RESULT:
+Both PostgreSQL instances started successfully and
+their initialisation scripts completed.
+
+Source: Actual Docker Compose and PostgreSQL outputs.
+This is a structured transcription, not a screenshot.

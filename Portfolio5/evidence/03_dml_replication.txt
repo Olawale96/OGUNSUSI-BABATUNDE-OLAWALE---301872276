@@ -1,0 +1,68 @@
+﻿PORTFOLIO 5 - INSERT UPDATE AND DELETE REPLICATION
+
+Table:
+distributed_demo.registration_events
+
+Demonstration event:
+event_id: 2001
+matric_number: MUN/DEMO/2001
+
+TEST 1: INSERT
+
+Initial publisher query:
+(0 rows)
+
+Publisher INSERT result:
+INSERT 0 1
+
+Subscriber observation:
+event_id: 2001
+matric_number: MUN/DEMO/2001
+event_type: course_registered
+
+Result: PASS
+
+A repeated INSERT attempt was rejected by the publisher
+with a duplicate-key violation on registration_events_pkey.
+The original inserted record remained valid and replicated.
+
+TEST 2: UPDATE
+
+Publisher operation:
+UPDATE distributed_demo.registration_events
+SET event_type = 'course_dropped'
+WHERE event_id = 2001;
+
+Actual result:
+UPDATE 1
+
+Subscriber observation:
+event_id: 2001
+matric_number: MUN/DEMO/2001
+event_type: course_dropped
+
+Result: PASS
+
+TEST 3: DELETE
+
+Publisher operation:
+DELETE FROM distributed_demo.registration_events
+WHERE event_id = 2001;
+
+Actual result:
+DELETE 1
+
+Subscriber verification:
+(0 rows)
+
+Result: PASS
+
+INTERPRETATION:
+INSERT, UPDATE and DELETE operations performed on the
+publisher were reflected on the subscriber.
+
+Replication was asynchronous. No precise replication
+delay measurement was conducted.
+
+Source: Actual publisher and subscriber SQL outputs.
+This is a structured transcription, not a screenshot.

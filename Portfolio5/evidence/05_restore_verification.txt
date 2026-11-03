@@ -1,0 +1,62 @@
+﻿PORTFOLIO 5 - DATABASE RESTORATION VERIFICATION
+
+Source backup:
+mun_srrms_dist_backup.dump
+
+Restore database:
+mun_srrms_restore_test
+
+Restore operation:
+pg_restore -U postgres -d mun_srrms_restore_test
+
+Actual restore command completed without reported errors.
+
+RESTORED DATABASE VERIFICATION:
+
+current_database:
+mun_srrms_restore_test
+
+restored_event_rows:
+1
+
+RESTORED DEMONSTRATION RECORD:
+
+event_id: 3001
+matric_number: MUN/DEMO/3001
+event_type: course_registered
+event_time: 2026-11-03 09:21:29.446374+00
+
+CONSTRAINT VERIFICATION:
+
+registration_events_pkey:
+PRIMARY KEY (event_id)
+
+registration_events_event_type_check:
+CHECK restricts event_type to:
+course_registered
+course_dropped
+result_published
+
+RESTORE SCRIPT VERIFICATION:
+
+current_database:
+mun_srrms_restore_test
+
+restored_event_rows:
+1
+
+INTERPRETATION:
+The restored database contained the expected table,
+one event record, primary-key constraint and
+event-type CHECK constraint.
+
+RESULT:
+Logical backup and restoration successfully verified.
+
+LIMITATION:
+This test does not establish point-in-time recovery,
+automatic disaster recovery, a production RTO or RPO,
+or independent-site recovery.
+
+Source: Actual pg_restore and PostgreSQL verification
+outputs. This is a structured transcription.

@@ -1,0 +1,53 @@
+﻿PORTFOLIO 5 - CUSTOM-FORMAT DATABASE BACKUP
+
+Source database: mun_srrms_dist
+Publisher: mun-srrms-publisher
+
+Backup command:
+pg_dump -U postgres -d mun_srrms_dist -Fc
+
+Backup file:
+mun_srrms_dist_backup.dump
+
+Backup creation completed without reported errors.
+
+Container backup file size:
+3.6K
+
+Windows backup file size:
+3634 bytes
+
+Docker copy result:
+Successfully copied approximately 3.63kB.
+
+ARCHIVE INSPECTION:
+Format: CUSTOM
+Compression: gzip
+Dumped from PostgreSQL: 16.15
+Dumped by pg_dump: 16.15
+TOC entries: 13
+
+Archive objects included:
+- distributed_demo schema
+- registration_events table
+- Table data
+- Primary-key constraint
+- Publication definition
+- Publication table association
+
+A separate demonstration event was inserted before
+backup creation:
+
+event_id: 3001
+matric_number: MUN/DEMO/3001
+event_type: course_registered
+
+The publisher INSERT succeeded, and the subscriber
+verification returned the same event.
+
+RESULT:
+Custom-format backup created, copied to Windows and
+inspected successfully.
+
+Source: Actual pg_dump, ls, docker cp and pg_restore
+archive-listing outputs. Structured transcription.

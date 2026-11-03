@@ -1,0 +1,52 @@
+﻿PORTFOLIO 5 - ENVIRONMENT AND RESTORE TEST DETAILS
+
+Operating system: Windows 64-bit
+Docker Engine: 29.9.2
+Docker Compose: 5.6.1
+PostgreSQL container version: 16.15
+
+Docker-reported total memory:
+8170397696 bytes
+
+Approximate memory:
+7.61 GiB
+
+CONTAINER STATUS:
+
+mun-srrms-publisher:
+Up and healthy
+Host port: 55432
+
+mun-srrms-subscriber:
+Up and healthy
+Host port: 55433
+
+RESTORE CHECK SCRIPT:
+05_backup_restore_checks.sql
+
+The script was executed by piping its content from
+the Windows PowerShell host into psql in the publisher
+container because the /scripts volume was mounted
+only in the subscriber service.
+
+Actual output:
+current_database: mun_srrms_restore_test
+restored_event_rows: 1
+
+REPLICATION CHARACTERISTICS:
+Logical replication
+Asynchronous mode
+Table-level publication
+No automatic DDL replication
+No automatic failover
+
+LIMITATIONS:
+Both containers ran on the same physical computer.
+No production load test was performed.
+No replication-delay benchmark was conducted.
+No physical standby failover was tested.
+No sharded cluster was deployed.
+No cloud deployment was performed.
+
+Source: Actual Docker and PostgreSQL environment
+outputs. This is a structured transcription.

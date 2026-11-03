@@ -1,0 +1,56 @@
+﻿PORTFOLIO 5 - LOGICAL REPLICATION SUBSCRIPTION
+
+Database: mun_srrms_dist
+Publisher: mun-srrms-publisher
+Subscriber: mun-srrms-subscriber
+
+SUBSCRIPTION CREATION:
+CREATE SUBSCRIPTION mun_srrms_events_sub
+
+Actual output:
+NOTICE: created replication slot "mun_srrms_events_sub"
+on publisher
+CREATE SUBSCRIPTION
+
+SUBSCRIPTION VERIFICATION:
+Subscription: mun_srrms_events_sub
+Enabled: true
+Replication slot: mun_srrms_events_sub
+Publication: mun_srrms_events_pub
+
+REPLICATION WORKER:
+Initial worker PID: 390
+Received LSN: 0/196E1E0
+Latest end LSN: 0/196E1E0
+Latest end time: 2026-11-03 09:16:32.865252+00
+
+PUBLISHER MONITORING:
+Slot: mun_srrms_events_sub
+Plugin: pgoutput
+Slot type: logical
+Active: true
+
+Connection state: streaming
+Sync state: async
+Sent LSN: 0/196E690
+Write LSN: 0/196E690
+Flush LSN: 0/196E690
+Replay LSN: 0/196E690
+
+SUBSCRIBER MONITORING:
+Subscription enabled: true
+Worker PID: 390
+Received LSN: 0/196E690
+Latest end LSN: 0/196E690
+Latest end time: 2026-11-03 09:20:01.650975+00
+
+INTERPRETATION:
+The replication worker was active and the connection
+was streaming asynchronously. The matching LSN values
+showed that the subscriber had caught up to the
+reported publisher position at the observation time.
+
+RESULT: Subscription and monitoring verified.
+
+Source: Actual publisher and subscriber query outputs.
+This is a structured transcription, not a screenshot.
