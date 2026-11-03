@@ -1,0 +1,61 @@
+﻿PORTFOLIO 4 - INDEXING AND QUERY EXECUTION EVIDENCE
+
+DBMS: MongoDB 9.0.4
+Shell: mongosh 2.14.1
+Database: mun_srrms_nosql
+Collection: student_profiles
+
+INDEX DEFINITIONS
+
+1. _id_
+   Key: _id ascending
+
+2. uq_matric_number
+   Key: matric_number ascending
+   Unique: true
+
+3. idx_programme_code
+   Key: profile.programme.programme_code ascending
+
+QUERY 1: MATRICULATION-NUMBER LOOKUP
+
+Filter:
+MUN/2026/0001
+
+Actual result:
+Ada O.
+
+QUERY 2: PROGRAMME LOOKUP
+
+Filter:
+profile.programme.programme_code = MIT
+
+Actual result:
+Two profiles returned.
+
+EXPLAIN EXECUTION STATISTICS
+
+Winning plan: EXPRESS_IXSCAN
+Index used: uq_matric_number
+nReturned: 1
+totalKeysExamined: 1
+totalDocsExamined: 1
+executionTimeMillis: 4
+executionTimeMicros: 4788
+
+INTERPRETATION
+
+The representative matriculation-number query used
+the unique business-key index and examined one index
+key and one document.
+
+The measurement demonstrates index utilisation.
+It does not establish a performance improvement or
+scalability because no representative before-and-after
+benchmark was conducted.
+
+RESULT: Index creation, query execution and execution-plan
+inspection completed.
+
+Source: Actual mongosh indexing and executionStats output.
+This file is a structured transcription, not a raw export.

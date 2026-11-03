@@ -1,0 +1,42 @@
+﻿PORTFOLIO 4 - AGGREGATION PIPELINE EVIDENCE
+
+DBMS: MongoDB 9.0.4
+Database: mun_srrms_nosql
+Collection: student_profiles
+
+PIPELINE STAGES
+
+1. $unwind
+2. $group
+3. $project
+4. $sort
+
+ACTUAL AGGREGATION RESULTS
+
+Course: MIT8101
+Activity type: quiz_attempt
+Event count: 1
+
+Course: MIT8101
+Activity type: resource_view
+Event count: 1
+
+Course: MIT8102
+Activity type: forum_post
+Event count: 1
+
+Total learning activity events: 3
+
+INTERPRETATION
+
+The pipeline successfully separated embedded learning
+activity events, grouped them by course and activity type,
+projected the required output fields and sorted the results.
+
+The small sample demonstrates aggregation functionality,
+not institutional-scale analytical performance.
+
+RESULT: Aggregation pipeline executed successfully.
+
+Source: Actual mongosh aggregation output.
+This file is a structured transcription, not a raw export.

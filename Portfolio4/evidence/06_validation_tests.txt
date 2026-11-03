@@ -1,0 +1,36 @@
+﻿PORTFOLIO 4 - MONGODB VALIDATION EVIDENCE
+
+DBMS: MongoDB 9.0.4
+Shell: mongosh 2.14.1
+Database: mun_srrms_nosql
+Collection: student_profiles
+
+TEST 1: Whitespace-only matriculation number
+Actual result: Rejected
+MongoDB error code: 121
+Status: PASS
+
+TEST 2: Unexpected top-level field
+Actual result: Rejected
+MongoDB error code: 121
+Status: PASS
+
+TEST 3: Unsupported notification channel
+Actual result: Rejected
+MongoDB error code: 121
+Status: PASS
+
+TEST 4: Unexpected nested profile field
+Actual result: Rejected
+MongoDB error code: 121
+Status: PASS
+
+SUMMARY:
+Invalid documents rejected: 4
+Unexpected outcomes: 0
+Final profile count: 2
+
+ALL VALIDATION TESTS PASSED.
+
+Source: Actual mongosh execution output supplied during
+the Portfolio 4 practical implementation.

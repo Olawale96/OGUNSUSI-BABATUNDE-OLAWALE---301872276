@@ -1,0 +1,30 @@
+﻿PORTFOLIO 4 - COLLECTION CREATION AND VALIDATION
+
+DBMS: MongoDB 9.0.4
+Shell: mongosh 2.14.1
+Database: mun_srrms_nosql
+Collection: student_profiles
+
+ACTUAL EXECUTION RESULTS
+
+Created student_profiles with strict JSON Schema validation.
+Unique matric_number index verified.
+
+Configuration verified:
+- validationLevel: strict
+- validationAction: error
+- Top-level additionalProperties: false
+- Nested profile validation
+- Nested preferences validation
+- Maximum learning activities: 20
+- Required BSON Date fields
+
+Index created:
+uq_matric_number
+Key: matric_number ascending
+Unique: true
+
+RESULT: Collection creation and configuration successful.
+
+Source: Actual mongosh output supplied during execution.
+This file is a structured transcription, not a raw export.

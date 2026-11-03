@@ -1,0 +1,44 @@
+﻿PORTFOLIO 4 - CRUD OPERATION EVIDENCE
+
+DBMS: MongoDB 9.0.4
+Database: mun_srrms_nosql
+Collection: student_profiles
+Demonstration identifier: MUN/DEMO/9001
+
+READ
+
+Ada Okafor's profile was retrieved using findOne().
+
+CREATE
+
+Previous demonstration document removed: 0
+Insertion acknowledged: true
+Generated ObjectId: 6ae907e193dc0690218d63cc
+
+UPDATE
+
+Update operators: $set and $push
+matchedCount: 1
+modifiedCount: 1
+upsertedCount: 0
+
+A learning activity was appended and notification
+preferences were updated.
+
+READ AFTER UPDATE
+
+The demonstration document showed the updated
+notification channels and learning activity.
+
+DELETE
+
+deletedCount: 1
+
+FINAL RESULT
+
+Remaining profile count: 2
+
+RESULT: CREATE, READ, UPDATE and DELETE succeeded.
+
+Source: Actual mongosh CRUD execution output.
+This file is a structured transcription, not a raw export.

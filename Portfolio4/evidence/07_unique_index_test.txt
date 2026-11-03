@@ -1,0 +1,40 @@
+﻿PORTFOLIO 4 - UNIQUE MATRICULATION NUMBER INDEX TEST
+
+DBMS: MongoDB 9.0.4
+Shell: mongosh 2.14.1
+Database: mun_srrms_nosql
+Collection: student_profiles
+
+Test identifier:
+MUN/TEST/UNIQUE-INDEX-9001
+
+TEST 1: FIRST INSERTION
+
+Actual result:
+First test document inserted: true
+
+TEST 2: DUPLICATE INSERTION
+
+Actual result:
+Duplicate matriculation number rejected.
+
+MongoDB error code: 11000
+
+TEST 3: CLEANUP
+
+Temporary test documents removed: 1
+
+TEST 4: FINAL DOCUMENT COUNT
+
+Final profile count: 2
+
+OVERALL RESULT:
+UNIQUE INDEX TEST PASSED.
+
+The unique uq_matric_number index prevented two
+documents from using the same matriculation number.
+
+The temporary test document was removed, preserving
+the two original sample profiles.
+
+Source: Actual mongosh execution output.

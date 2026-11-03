@@ -1,0 +1,45 @@
+﻿PORTFOLIO 4 - SEED DATA AND DOCUMENT VERIFICATION
+
+DBMS: MongoDB 9.0.4
+Database: mun_srrms_nosql
+Collection: student_profiles
+
+SEED EXECUTION
+
+New sample profiles inserted: 2
+Existing sample profiles preserved: 0
+Total profiles in collection: 2
+
+DOCUMENTS VERIFIED
+
+1. MUN/2026/0001
+   Student: Ada Okafor
+   Programme: MSc Information Technology
+   Notification channels: email, in_app
+   Learning activities: 2
+
+2. MUN/2026/0002
+   Student: Chidi Bello
+   Programme: MSc Information Technology
+   Notification channels: sms, in_app
+   Learning activities: 1
+
+BSON DATE VERIFICATION
+
+Ada:
+updated_at_type: date
+activity_count: 2
+
+Chidi:
+updated_at_type: date
+activity_count: 1
+
+INDEX VERIFICATION
+
+_id_: present
+uq_matric_number: present, unique
+
+RESULT: Two valid sample profiles inserted and verified.
+
+Source: Actual mongosh seed and verification outputs.
+This file is a structured transcription, not a raw export.
