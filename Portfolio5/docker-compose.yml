@@ -1,0 +1,52 @@
+services:
+  publisher:
+    image: postgres:16
+    container_name: mun-srrms-publisher
+    environment:
+      POSTGRES_DB: mun_srrms_dist
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: LocalLab_Publisher_ChangeMe
+    command:
+      - postgres
+      - -c
+      - wal_level=logical
+      - -c
+      - max_wal_senders=10
+      - -c
+      - max_replication_slots=10
+    ports:
+      - "55432:5432"
+    volumes:
+      - publisher_data:/var/lib/postgresql/data
+      - ./docker/publisher-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d mun_srrms_dist"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  subscriber:
+    image: postgres:16
+    container_name: mun-srrms-subscriber
+    environment:
+      POSTGRES_DB: mun_srrms_dist
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: LocalLab_Subscriber_ChangeMe
+    ports:
+      - "55433:5432"
+    volumes:
+      - subscriber_data:/var/lib/postgresql/data
+      - ./docker/subscriber-init:/docker-entrypoint-initdb.d:ro
+      - ./sql:/scripts:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d mun_srrms_dist"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    depends_on:
+      publisher:
+        condition: service_healthy
+
+volumes:
+  publisher_data:
+  subscriber_data:

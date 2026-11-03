@@ -1,0 +1,9 @@
+-- Portfolio 5: publisher-side logical replication tests.
+--
+-- For evidence capture, execute INSERT, UPDATE and DELETE
+-- separately, verifying the subscriber after each operation.
+--
+-- Do not execute the entire file as one batch when you need
+-- to demonstrate each intermediate subscriber state.
+--
+-- Execute publisher-monitoring queries separately after DML.
