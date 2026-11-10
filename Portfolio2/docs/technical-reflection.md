@@ -15,7 +15,7 @@ This separation was an important implementation decision because it prevented th
 
 I developed and executed seven SQL queries covering different database operations.
 
-These included multiple-table joins, filtering, result retrieval, aggregation, window functions and correlated subqueries.
+These included multiple-table joins, filtering, result retrieval, aggregation, window functions and an anti-join using LEFT JOIN ... IS NULL.
 
 One important improvement involved the query for identifying students with pending results.
 
@@ -200,7 +200,7 @@ This portfolio improved my practical understanding of:
 - SQL joins and relational query processing.
 - Aggregate functions and grouping operations.
 - Window functions and ranking.
-- EXISTS and NOT EXISTS subqueries.
+- Anti-join queries using LEFT JOIN ... IS NULL to identify missing related records.
 - PostgreSQL EXPLAIN ANALYZE.
 - Sequential scans, index scans and bitmap operations.
 - Hash joins and hash aggregation.

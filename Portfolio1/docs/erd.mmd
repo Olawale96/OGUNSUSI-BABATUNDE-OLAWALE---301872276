@@ -1,5 +1,4 @@
-
-erDiagram
+﻿erDiagram
     DEPARTMENT ||--o{ PROGRAMME : contains
     DEPARTMENT ||--o{ LECTURER : employs
     DEPARTMENT ||--o{ COURSE : owns
@@ -77,13 +76,19 @@ erDiagram
         int offering_id FK
         date registration_date
         varchar status
-        UK student_id_offering_id
     }
 
     RESULT {
         int result_id PK
-        int enrolment_id FK_UK
+        int enrolment_id FK
         numeric mark
         varchar grade
         timestamptz recorded_at
     }
+
+%% Additional UNIQUE constraints enforced by PostgreSQL:
+%% PROGRAMME: (department_id, programme_name)
+%% SEMESTER: (academic_year, term)
+%% COURSE_OFFERING: (course_id, semester_id, section_code)
+%% ENROLMENT: (student_id, offering_id)
+%% RESULT: enrolment_id

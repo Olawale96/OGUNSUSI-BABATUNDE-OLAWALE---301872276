@@ -105,25 +105,56 @@ For a production university system, the grading policy should be explicitly defi
 
 This limitation is acknowledged rather than presenting the existing implementation as having an integrity guarantee that it does not currently provide.
 
-## 6. Key Functional Dependencies
+## 6. Key Functional Dependencies and Candidate Keys
+
+A candidate key is a minimal set of attributes that uniquely identifies every tuple in a relation. The PostgreSQL schema enforces candidate keys through PRIMARY KEY and UNIQUE constraints. Candidate-key attributes are NOT NULL in the implemented design.
+
+The following table identifies the candidate keys enforced by the actual database schema.
+
+| Relation | Candidate keys |
+|---|---|
+| DEPARTMENT | department_id; department_code; department_name |
+| PROGRAMME | programme_id; programme_code; (department_id, programme_name) |
+| LECTURER | lecturer_id; staff_number; email |
+| STUDENT | student_id; matric_number; email |
+| COURSE | course_id; course_code |
+| SEMESTER | semester_id; (academic_year, term) |
+| COURSE_OFFERING | offering_id; (course_id, semester_id, section_code) |
+| ENROLMENT | enrolment_id; (student_id, offering_id) |
+| RESULT | result_id; enrolment_id |
 
 The principal functional dependencies include:
 
 | Relation | Functional dependency |
 |---|---|
 | DEPARTMENT | department_id → department_code, department_name |
+| DEPARTMENT | department_code → department_id, department_name |
+| DEPARTMENT | department_name → department_id, department_code |
 | PROGRAMME | programme_id → department_id, programme_code, programme_name, award_level |
+| PROGRAMME | programme_code → programme_id, department_id, programme_name, award_level |
+| PROGRAMME | (department_id, programme_name) → programme_id, programme_code, award_level |
 | LECTURER | lecturer_id → staff_number, department_id, first_name, last_name, email |
-| STUDENT | student_id → matric_number, names, email, programme_id, status |
+| LECTURER | staff_number → lecturer_id, department_id, first_name, last_name, email |
+| LECTURER | email → lecturer_id, staff_number, department_id, first_name, last_name |
+| STUDENT | student_id → matric_number, first_name, last_name, email, date_of_birth, admission_date, programme_id, status |
+| STUDENT | matric_number → student_id, first_name, last_name, email, date_of_birth, admission_date, programme_id, status |
+| STUDENT | email → student_id, matric_number, first_name, last_name, date_of_birth, admission_date, programme_id, status |
 | COURSE | course_id → course_code, course_title, credit_units, department_id |
+| COURSE | course_code → course_id, course_title, credit_units, department_id |
 | SEMESTER | semester_id → academic_year, term, start_date, end_date |
+| SEMESTER | (academic_year, term) → semester_id, start_date, end_date |
 | COURSE_OFFERING | offering_id → course_id, semester_id, lecturer_id, section_code, capacity |
+| COURSE_OFFERING | (course_id, semester_id, section_code) → offering_id, lecturer_id, capacity |
 | ENROLMENT | enrolment_id → student_id, offering_id, registration_date, status |
+| ENROLMENT | (student_id, offering_id) → enrolment_id, registration_date, status |
 | RESULT | result_id → enrolment_id, mark, grade, recorded_at |
+| RESULT | enrolment_id → result_id, mark, grade, recorded_at |
 
-Additional candidate keys are enforced using UNIQUE constraints. Examples include department_code, matric_number, programme_code, course_code, academic_year with term, and the composite student_id with offering_id in ENROLMENT.
+Each determinant listed above is a candidate key and therefore determines the remaining attributes in its relation.
 
-## 7. Integrity Constraints and Design Decisions
+The candidate keys demonstrate how the database combines surrogate identifiers with business-level uniqueness rules. For example, enrolment_id provides a stable internal identifier, while (student_id, offering_id) enforces the business rule against duplicate registrations.
+
+These dependencies form the basis for evaluating partial and transitive dependencies in the subsequent 2NF and 3NF analysis.## 7. Integrity Constraints and Design Decisions
 
 The database uses several integrity mechanisms:
 

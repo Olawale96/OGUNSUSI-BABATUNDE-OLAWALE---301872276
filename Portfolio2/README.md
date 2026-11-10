@@ -76,7 +76,7 @@ Seven SQL queries were developed and successfully executed against the original 
 | Q4 | Registration counts and average marks | GROUP BY, COUNT and AVG |
 | Q5 | Student rankings | RANK() window function |
 | Q6 | High-mark result count | COUNT and WHERE |
-| Q7 | Individual pending course results | EXISTS / NOT EXISTS and LEFT JOIN |
+| Q7 | Individual pending course results | LEFT JOIN ... IS NULL (anti-join) |
 
 The corrected Q7 query identifies individual course enrolments without results, including students who have already received results for other courses.
 

@@ -1,8 +1,7 @@
-# Metropolitan University of Nigeria
+﻿# Metropolitan University of Nigeria
 ## Student Registration and Result Management System
 
 ```mermaid
-
 erDiagram
     DEPARTMENT ||--o{ PROGRAMME : contains
     DEPARTMENT ||--o{ LECTURER : employs
@@ -75,7 +74,7 @@ erDiagram
         int capacity
     }
 
-      ENROLMENT {
+    ENROLMENT {
         int enrolment_id PK
         int student_id FK
         int offering_id FK
@@ -91,8 +90,12 @@ erDiagram
         timestamptz recorded_at
     }
 
-      %% ENROLMENT has a composite UNIQUE constraint on student_id and offering_id.
-    %% RESULT.enrolment_id is also UNIQUE, allowing at most one result per enrolment.
+%% Additional UNIQUE constraints enforced by PostgreSQL:
+%% PROGRAMME: (department_id, programme_name)
+%% SEMESTER: (academic_year, term)
+%% COURSE_OFFERING: (course_id, semester_id, section_code)
+%% ENROLMENT: (student_id, offering_id)
+%% RESULT: enrolment_id
 ```
 
 ### Database Integrity Constraints
@@ -102,3 +105,9 @@ erDiagram
 2. RESULT.enrolment_id is UNIQUE and NOT NULL, ensuring that each enrolment can have at most one result record.
 
 3. Every RESULT must reference an existing ENROLMENT.
+
+4. PROGRAMME enforces uniqueness of (department_id, programme_name).
+
+5. SEMESTER enforces uniqueness of (academic_year, term).
+
+6. COURSE_OFFERING enforces uniqueness of (course_id, semester_id, section_code).
