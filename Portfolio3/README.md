@@ -1,48 +1,57 @@
+# Portfolio 3 – Transaction Management and Concurrency
 
-# Portfolio 3 Evidence Register
+## 1. Overview
 
-All evidence must be genuine PostgreSQL execution output or screenshots captured during the practical experiments.
+Portfolio 3 examines transaction management, isolation behaviour, concurrent database operations and integrity enforcement within the Metropolitan University of Nigeria Student Registration and Result Management System (MUN-SRRMS).
 
-## 1. Transaction Control
+The practical experiments were conducted using PostgreSQL 18.6. They demonstrate how transaction boundaries, isolation levels and database constraints help preserve data consistency when multiple users access the system concurrently.
 
-| Filename | Evidence |
+## 2. Evidence Register
+
+The `evidence` directory contains six structured text transcripts documenting the PostgreSQL practical experiments.
+
+| Evidence file | Experiment and observed outcome |
 |---|---|
-| 01_commit_result.png | BEGIN, INSERT and COMMIT with committed record |
-| 02_rollback_result.png | INSERT followed by ROLLBACK and zero matching rows |
-| 03_savepoint_result.png | SAVEPOINT, partial rollback and retained records |
+| `01_transaction_control.txt` | Demonstrates COMMIT, ROLLBACK and SAVEPOINT. Committed changes were retained, rolled-back changes were discarded, and partial rollback preserved the appropriate records. |
+| `02_read_committed.txt` | Demonstrates READ COMMITTED behaviour. Session A observed 100 initially and 110 after Session B committed an update. |
+| `03_repeatable_read.txt` | Demonstrates REPEATABLE READ snapshot behaviour. Session A continued to observe 100, while a fresh read after the transaction returned 110. |
+| `04_concurrent_registration.txt` | Demonstrates concurrent registration attempts. PostgreSQL rejected the second insert through the `enrolment_student_offering_unique` constraint, leaving exactly one matching registration. |
+| `05_integrity_checks.txt` | Records verification of the unique constraint, zero duplicate student/offering combinations and enrolment counts before cleanup. |
+| `06_cleanup_verification.txt` | Records deletion of the demonstration registration and verification that the performance database returned to 40,004 enrolment records. |
 
-## 2. Transaction Isolation
+## 3. Important Experimental Observations
 
-| Filename | Evidence |
-|---|---|
-| 04_read_committed_session_a.png | Session A first and second readings: 100 and 110 |
-| 05_read_committed_session_b.png | Session B concurrent update and COMMIT |
-| 06_repeatable_read_session_a.png | Session A repeated readings of 100 |
-| 07_repeatable_read_session_b.png | Session B concurrent update and COMMIT |
-| 08_repeatable_read_fresh_read.png | Fresh read after both transactions: 110 |
+### Transaction control
 
-## 3. Concurrent Registration
+The COMMIT, ROLLBACK and SAVEPOINT experiments demonstrated the ability to retain, discard and partially reverse changes within a transaction.
 
-| Filename | Evidence |
-|---|---|
-| 09_duplicate_registration_session_a.png | Session A successful INSERT and COMMIT |
-| 10_duplicate_registration_session_b.png | Session B blocking attempt, unique-constraint error and ROLLBACK |
-| 11_registration_count_verification.png | Final count of exactly one registration |
+The experiment also recorded gaps in identity values after rollback. This is expected PostgreSQL behaviour because identity sequences are not rolled back with ordinary transaction operations.
 
-## 4. Integrity and Cleanup
+### Transaction isolation
 
-| Filename | Evidence |
-|---|---|
-| 12_integrity_check.png | Unique constraint verification and zero duplicate registrations |
-| 13_cleanup_verification.png | DELETE 1 and final enrolment count of 40,004 |
+The READ COMMITTED experiment demonstrated that successive statements within a transaction can observe newly committed changes.
 
-## 5. Evidence Requirements
+The REPEATABLE READ experiment demonstrated that a transaction retains its consistent snapshot, preventing a later SELECT from observing the concurrent committed update during that transaction.
 
-- Screenshots must show the actual PostgreSQL commands and their results.
-- Capture both Session A and Session B wherever concurrent operations are involved.
-- Do not expose passwords or credentials.
-- Do not invent or recreate screenshots that purport to show historical executions.
-- Preserve original terminal results wherever possible.
-- Clearly distinguish experimentally observed outcomes from theoretical expectations.
+### Concurrent registration and integrity
 
-All evidence supports the technical analysis in portfolio-analysis-template.md.
+The concurrent registration experiment demonstrated how a UNIQUE constraint prevents two transactions from creating the same student/course-offering registration.
+
+The integrity checks subsequently identified zero duplicate student/offering combinations.
+
+### Cleanup
+
+The demonstration registration was removed after testing. The performance database returned to its original 40,004 enrolment records. The cleanup transcript confirms that the original academic database was not modified by this operation.
+
+## 4. Evidence and Reproducibility Notes
+
+- The evidence directory contains structured text transcripts, not PNG screenshots.
+- The transcripts record the commands, outputs and observations documented during the practical experiments.
+- Concurrent operations were performed using independent database sessions.
+- The experiments distinguish observed PostgreSQL behaviour from theoretical explanations.
+- Demonstration data was cleaned up and the final record count was verified.
+- The transcripts should be read alongside the SQL scripts and technical analysis in this portfolio.
+
+## 5. Evidence Limitations
+
+The text transcripts provide a readable record of the practical results but are not substitutes for original graphical or terminal screenshots. They should therefore be described accurately as structured execution transcripts rather than screenshot evidence.
